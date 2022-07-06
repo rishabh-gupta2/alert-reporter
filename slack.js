@@ -46,8 +46,8 @@ const reportPayload = {
 };
 
 
-export function sendReport() {
+export const sendReport = async function() {
 }
 
-export function search() {
+export const search = async function() {
 }
