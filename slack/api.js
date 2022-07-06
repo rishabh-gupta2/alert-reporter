@@ -50,17 +50,17 @@ const reportPayload = {
 export const sendReport = async function() {
 }
 
-export async function search() {
+export async function search(query) {
 
-    const query = querystring.stringify(
+    const uriQuery = querystring.stringify(
         {
-            query: 'in:#oncall-alerts',
+            query: query,
             count: 100,
         }
     )
     return axios({
         method: "get",
-        url: `https://slack.com/api/search.all?${query}`,
+        url: `https://slack.com/api/search.all?${uriQuery}`,
         headers: {
             Authorization: `Bearer ${APP_TOKEN}`,
           },
