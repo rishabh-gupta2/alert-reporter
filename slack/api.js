@@ -11,84 +11,7 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-const reportPayload = {
-    blocks: [
-        {
-            type: "header",
-            text: {
-                type: "plain_text",
-                text: "Oncall Report",
-                emoji: true
-            }
-        },
-        {
-            type: "divider"
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "_Total Alerts_ -"
-                }
-            ]
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "_Acknowledged Alerts_ -"
-                }
-            ]
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "_Duplicate Alerts_ -"
-                }
-            ]
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "_Noisy Alerts_ -"
-                }
-            ]
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "_Signal to Noise Ratio_ -"
-                }
-            ]
-        },
-        {
-            type: "divider"
-        },
-        {
-            type: "section",
-            fields: [
-                {
-                    type: "mrkdwn",
-                    text: "*Error Code*"
-                },
-                {
-                    type: "mrkdwn",
-                    text: "*Count*"
-                }
-            ]
-        }
-    ]
-}
-
-export async function sendReport() {
+export async function send(reportPayload) {
     let requestBody = JSON.stringify(reportPayload)
     return axios.post(
         SEND_MESSAGE_BASE_URL + WEBHOOK_ID,
@@ -97,7 +20,6 @@ export async function sendReport() {
 }
 
 export async function search(query) {
-
     const uriQuery = querystring.stringify(
         {
             query: query,
@@ -107,8 +29,6 @@ export async function search(query) {
     return axios({
         method: "get",
         url: `${SEARCH_ALL_BASE_URL}?${uriQuery}`,
-        headers: {
-            Authorization: `Bearer ${APP_TOKEN}`,
-          },
+        headers: headers
     })
 }
