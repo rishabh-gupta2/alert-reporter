@@ -1,3 +1,4 @@
-const {sendReport} = require("./slack");
+import { search, sendReport } from './slack.js'
 
-sendReport()
+search().then(res => console.log(res.data))
+sendReport().then(res => console.log(res.data))

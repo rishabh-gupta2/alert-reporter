@@ -1,4 +1,5 @@
-const axios = require('axios');
+import axios from 'axios'
+import querystring from 'querystring'
 
 const WEBHOOK_ID = "T03NU6HD1AM/B03NU7BF5LZ/amMqQsYoTUjLdu59iGBxLdi0"
 const APP_TOKEN = "xoxp-3776221443361-3765989721828-3763770876691-4dc6a49336fb8b70360a31462c833a7c"
@@ -85,31 +86,29 @@ const reportPayload = {
             ]
         }
     ]
-};
+}
 
-
-const sendReport = async function() {
+export async function sendReport() {
     let requestBody = JSON.stringify(reportPayload)
-    console.log(requestBody)
-    axios.post(
+    return axios.post(
         SEND_MESSAGE_BASE_URL + WEBHOOK_ID,
         requestBody
-    ).then(function(response) {
-        console.log(response)
-        if (response.data.error) {
-            return alert(response.data.error.description);
+    )
+}
+
+export async function search() {
+
+    const query = querystring.stringify(
+        {
+            query: 'in:#oncall-alerts',
+            count: 100,
         }
-        return 0
-    }).catch(function(error){
-        // console.log(error)
-        return Promise.reject(error)
+    )
+    return axios({
+        method: "get",
+        url: `${SEARCH_ALL_BASE_URL}?${query}`,
+        headers: {
+            Authorization: `Bearer ${APP_TOKEN}`,
+          },
     })
 }
-
-const search = async function() {
-}
-
-module.exports = {
-    sendReport,
-    search
-};
